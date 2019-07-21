@@ -2,14 +2,14 @@ def before_all(context):
     context.USE_PDB = context.config.userdata.getbool('PDB')
     env = context.config.userdata.get('ENV', 'dev')
 
+    context.access_token = 'jovem'
+    context.change_price_permission_access_token = 'jovem_change_price'
+
     defaults = {
         'dev': {
-            'base_url': 'http://localhost:8000',
-            'client_id': 'A91c1S8yRcMeE3iDYo22EnOcaxzsXTKGzHA78e7A',
-            'client_secret': 'SBOLrrG0YpSuwCpWq8iRKvNEwUEDYyIRDE1pdCItgUZftC4V9IqMLxQIEB9salpp1mi9YMfnayhPGq59dNhS5T3eGaZVrZVGVYysaUnwTVOtVwNnvqJ57EusReJRbkro', # NOQA
-        },
+            'base_url': 'http://localhost:8000'
+        }
     }
-
     context.settings = defaults[env]
 
 

@@ -11,9 +11,8 @@ def _request_token(context):
             context.settings['client_secret']
         ),
         data={
-            'grant_type': 'password',
-            'username': context.settings['username'],
-            'password': context.settings['password']
+            'grant_type': 'client_credentials',
+            'scope': " ".join(context.settings['scopes'])
         }
     )
 
@@ -26,7 +25,7 @@ def _request_token(context):
 
 @given(u'My app has an access token')
 def request_access_token(context):
-    if getattr(context, 'access_token', None):
-        return context.access_token
+    if context.access_token:
+        return
 
     _request_token(context)
