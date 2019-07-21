@@ -27,5 +27,9 @@ urlpatterns = [
             ),
             namespace='oauth2_provider'
         )
+    ),
+    path(
+        '',
+        include('pdv.partners.urls'),
     )
 ]
