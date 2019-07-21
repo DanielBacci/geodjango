@@ -4,6 +4,7 @@ from rest_framework_gis.pagination import GeoJsonPagination
 from pdv.partners.filters import DistanceFilter
 from pdv.partners.models import Partner
 from pdv.partners.serializers import PartnerSerializer
+from pdv.partners.schemas import PartnerViewSchema
 
 
 class PartnersViewSet(viewsets.ModelViewSet):
@@ -15,3 +16,4 @@ class PartnersViewSet(viewsets.ModelViewSet):
     queryset = Partner.objects.all()
     filter_backends = (DistanceFilter,)
     distance_filter_field = 'address'
+    schema = PartnerViewSchema()

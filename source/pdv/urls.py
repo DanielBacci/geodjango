@@ -15,10 +15,25 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import path
+from rest_framework.documentation import include_docs_urls
+
+
+def ping(request):
+    return HttpResponse('pong')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(
+        r'^docs/',
+        include_docs_urls(
+            title='Parceiro Magalu API',
+            authentication_classes=tuple(),
+            permission_classes=tuple()
+        )
+    ),
     url(
         r'^oauth/',
         include(
@@ -31,5 +46,6 @@ urlpatterns = [
     path(
         '',
         include('pdv.partners.urls'),
-    )
+    ),
+    path('ping/', ping),
 ]
