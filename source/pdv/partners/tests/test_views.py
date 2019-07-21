@@ -213,7 +213,7 @@ class TestPartner:
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
-    def test_204_not_content_should_list_partner(
+    def test_200_ok_should_list_partner(
         self,
         client,
         partner_payload
@@ -232,3 +232,18 @@ class TestPartner:
         assert response.status_code == status.HTTP_200_OK
         assert response.json()['features']
         assert response.json()['next'] is None
+
+    def test_200_ok_should_filter_partner(
+        self,
+        client,
+        partner_payload
+    ):
+        client.post(
+            '/partners/',
+            format='json'
+        )
+        response = client.get(
+            f'/partners/?dist=4000&point=-122.4862,37.7694',
+            format='json'
+        )
+        assert response.status_code == status.HTTP_200_OK
