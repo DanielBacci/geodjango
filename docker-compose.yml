@@ -1,0 +1,17 @@
+version: "3.2"
+
+services:
+  pdv-web:
+    build:
+      context: .
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    ports:
+      - "8000:8000"
+    command: >
+          bash -c "make requirements-development &&
+           make test && 
+           make check-security-issues && 
+           make runserver-development"

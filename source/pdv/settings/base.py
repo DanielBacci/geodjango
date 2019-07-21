@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'g_rfjn19-1b1#4ah*!hnt+vn+=2o2*=ga+w=2_iz3*-e&%s!sn'
+SECRET_KEY = 'np2_t6t8pz5wjjrmz2=%%**)wpkzhqfrefuf-4&(y*zh_)pgro'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -28,16 +28,40 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.TokenHasResourceScope',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+
+
 # Application definition
 
-INSTALLED_APPS = [
+THIRD_PARTY_APPS = [
+    'oauth2_provider',
+    'rest_framework'
+]
+
+
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles'
 ]
+
+
+PROJECT_APPS = []
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
 ]
 
 ROOT_URLCONF = 'pdv.urls'
@@ -81,6 +106,19 @@ DATABASES = {
 }
 
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'cache',
+        'KEY_PREFIX': 'default',
+    },
+    'access_token': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'cache',
+        'KEY_PREFIX': 'token',
+    },
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -99,6 +137,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+OAUTH2_PROVIDER = {
+    'SCOPES': {
+        'account:read': 'Account Read',
+        'account:write': 'Account Write',
+    },
+    'OAUTH2_VALIDATOR_CLASS': (
+        'django_toolkit.oauth2.validators.CachedOAuth2Validator'
+    ),
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 36000
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

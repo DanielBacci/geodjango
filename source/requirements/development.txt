@@ -1,0 +1,17 @@
+-r base.txt
+bandit==1.6.2
+behave==1.2.6
+bumpversion==0.5.3
+gunicorn==19.9.0
+flake8==3.7.7
+isort==4.3.20
+model-mommy==1.6.0
+pytest-cov==2.7.1
+pytest-deadfixtures==2.1.0
+pytest-django==3.5.0
+pytest-env==0.6.2
+pytest-pythonpath==0.7.3
+pytest-runner==5.1
+pytest==4.6.3
+safety==1.8.5
+vcrpy==2.0.1
