@@ -13,9 +13,22 @@
 
         make requirements-development
 
-4.  Run the project:
+4. Installing SpatiaLite
+
+        [install](https://docs.djangoproject.com/en/2.2/ref/contrib/gis/install/spatialite/)
+
+5.  Run the project:
 
         make runserver-development
+
+## Docs
+
+    urls:
+        [POST] /partners/
+        [GET] /partners/?dist=4000&point=-122.4862,37.7694
+
+    Use:
+        Consult /docs/
 
 
 ## Tests
@@ -62,3 +75,5 @@ principles of [SEMVER](http://semver.org/).
 
         docker-compose up
         browser http://localhost:8000/
+
+        docker-compose run pdv-api bash (use makefike commands)
