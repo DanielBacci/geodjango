@@ -44,7 +44,8 @@ REST_FRAMEWORK = {
 
 THIRD_PARTY_APPS = [
     'oauth2_provider',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework_gis'
 ]
 
 
@@ -58,7 +59,7 @@ DJANGO_APPS = [
 ]
 
 
-PROJECT_APPS = []
+PROJECT_APPS = ['pdv.partners']
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
@@ -100,8 +101,9 @@ WSGI_APPLICATION = 'pdv.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.contrib.gis.db.backends.spatialite',
+        'NAME': 'geo',
+        'USER': 'geo'
     }
 }
 
