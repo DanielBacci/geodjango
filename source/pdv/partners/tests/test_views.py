@@ -213,6 +213,27 @@ class TestPartner:
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
+    def test_200_ok_should_patch_partner(
+        self,
+        client,
+        partner_payload
+    ):
+        response = client.post(
+            '/partners/',
+            data=partner_payload,
+            format='json'
+        )
+
+        partner_id = response.json()['id']
+
+        response = client.patch(
+            f'/partners/{partner_id}/',
+            data={'document': '1432132123891/0003'},
+            format='json'
+        )
+
+        assert response.status_code == status.HTTP_200_OK
+
     def test_200_ok_should_list_partner(
         self,
         client,
