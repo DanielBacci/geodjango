@@ -3,8 +3,8 @@ from rest_framework_gis.pagination import GeoJsonPagination
 
 from pdv.partners.filters import DistanceFilter
 from pdv.partners.models import Partner
-from pdv.partners.serializers import PartnerSerializer
 from pdv.partners.schemas import PartnerViewSchema
+from pdv.partners.serializers import PartnerSerializer
 
 
 class PartnersViewSet(viewsets.ModelViewSet):
