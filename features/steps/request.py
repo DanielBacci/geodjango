@@ -1,6 +1,7 @@
 import functools
 import json
 
+import random
 import requests
 from behave import step
 
@@ -27,13 +28,13 @@ put = functools.partial(request, 'PUT')
 options = functools.partial(request, 'OPTIONS')
 
 
-@step('Create a partner with document "{document}"')
-def create_a_partner(context, document):
+@step('Create a partner with document')
+def create_a_partner(context):
     payload = {
         "id": 1,
         "trading_name": "Adega da Cerveja - Pinheiros",
         "owner_name": "Zé da Silva",
-        "document": document,
+        "document": "1432132123891/000{}".format(random.randint(100, 500)),
         "coverage_area": {
             "type": "MultiPolygon",
             "coordinates": [[[[
@@ -135,13 +136,13 @@ def create_a_partner(context, document):
     )
 
 
-@step('Update a partner with document "{document}"')
-def update_a_partner(context, document):
+@step('Update a partner with document')
+def update_a_partner(context):
     payload = {
-        "id": 1,
+        "id": context.response.json()['id'],
         "trading_name": "Adega da Cerveja - Pinheiros",
         "owner_name": "Zé da Silva",
-        "document": document,
+        "document": "1432132123891/000{}".format(random.randint(100, 500)),
         "coverage_area": {
             "type": "MultiPolygon",
             "coordinates": [[[[
@@ -235,34 +236,25 @@ def update_a_partner(context, document):
             "coordinates": [-43.297337, -23.013538]
         },
     }
+
     context.response = put(
         access_token=context.access_token,
         base_url=context.settings['base_url'],
-        endpoint='/partners/',
+        endpoint='/partners/{}/'.format(context.response.json()['id']),
         data=payload
     )
 
 
-@step('Delete a partner with id "{partner_id}"')
-def delete_a_partner(context, partner_id):
+@step('Delete a partner with id')
+def delete_a_partner(context):
     context.response = delete(
         access_token=context.access_token,
         base_url=context.settings['base_url'],
-        endpoint='/partners/{}'.format(partner_id),
+        endpoint='/partners/{}'.format(context.response.json()['id']),
     )
 
 
-@step('Patch a partner with id "{partner_id}"')
-def patch_a_partner(context, partner_id):
-    context.response = patch(
-        access_token=context.access_token,
-        base_url=context.settings['base_url'],
-        endpoint='/partners/{}'.format(partner_id),
-        data={"name": "teste"}
-    )
-
-
-@step('find a partner id "{partner_id}"')
+@step('Find a partner with id "{partner_id}"')
 def get_a_partner(context, partner_id):
     context.response = get(
         access_token=context.access_token,
