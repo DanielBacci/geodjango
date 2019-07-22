@@ -52,6 +52,8 @@ suite, execute:
 
     make test-acceptance
 
+![image](ee.png?1)
+
 
 ## Create new release
 
